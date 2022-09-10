@@ -33,7 +33,7 @@ Ports used in the project:
    docker-compose run --rm composer update
    ```
 
-5. Run all migrations:
+5. Run all migrations & seeds:
 
    ```sh
    docker-compose run --rm console doctrine:migrations:diff
@@ -42,4 +42,8 @@ Ports used in the project:
    ```sh
    docker-compose run --rm console doctrine:migrations:migrate
    ```
+   ```sh
+   docker compose run --rm console doctrine:fixtures:load
+   ```
+   
 ---

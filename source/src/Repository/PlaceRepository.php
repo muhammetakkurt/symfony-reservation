@@ -30,6 +30,16 @@ class PlaceRepository extends ServiceEntityRepository
         }
     }
 
+    public function searchByFilters($startDate, $endDate){
+        $query = $this->createQueryBuilder('p')
+            ->leftJoin('p.reservations', 'r', 'WITH', 'r.start_date >= :startDate AND r.end_date <= :endDate ', 'r.id')
+            ->where('r.id IS NULL')
+            ->setParameters('startDate', $startDate)
+            ->setParameter('endDate', $endDate)
+            ->getQuery();
+        return $query;
+    }
+
     public function remove(Place $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);

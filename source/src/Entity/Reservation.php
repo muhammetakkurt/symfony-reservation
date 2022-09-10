@@ -21,6 +21,9 @@ class Reservation
     #[ORM\Column]
     private ?int $place_id = null;
 
+    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 5)]
+    private ?string $price = null;
+
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $start_date = null;
 
@@ -32,6 +35,10 @@ class Reservation
 
     #[ORM\Column]
     private ?\DateTimeImmutable $updated_at = null;
+
+    #[ORM\ManyToOne(inversedBy: 'reservations')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Place $place = null;
 
     public function getId(): ?int
     {
@@ -58,6 +65,18 @@ class Reservation
     public function setPlaceId(int $place_id): self
     {
         $this->place_id = $place_id;
+
+        return $this;
+    }
+
+    public function getPrice(): ?string
+    {
+        return $this->price;
+    }
+
+    public function setPrice(string $price): self
+    {
+        $this->price = $price;
 
         return $this;
     }
@@ -106,6 +125,18 @@ class Reservation
     public function setUpdatedAt(\DateTimeImmutable $updated_at): self
     {
         $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    public function getPlace(): ?Place
+    {
+        return $this->place;
+    }
+
+    public function setPlace(?Place $place): self
+    {
+        $this->place = $place;
 
         return $this;
     }
